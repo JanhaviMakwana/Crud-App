@@ -12,6 +12,10 @@ export default class AddTutorial extends React.Component {
         }
     }
 
+    componentDidMount() {
+        console.log("Add Tutorial");
+    }
+
     onChangeTitle = (e) => {
         this.setState({ title: e.target.value });
     }
@@ -54,7 +58,7 @@ export default class AddTutorial extends React.Component {
 
     render() {
         return (
-            <div className="submit-form">
+            <div className="submit-form card p-4" >
                 {this.state.submitted ? (
                     <div>
                         <h4>You submitted successfully !</h4>
@@ -65,7 +69,7 @@ export default class AddTutorial extends React.Component {
                 ) : (
                     <div>
                         <div className="form-group">
-                            <label htmlFor="title">Title</label>
+                            <p className="h5">Title</p>
                             <input
                                 type="text"
                                 className="form-control"
@@ -77,7 +81,7 @@ export default class AddTutorial extends React.Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="description">Description</label>
+                            <p className="h5">Description</p>
                             <input
                                 type="text"
                                 className="form-control"
@@ -89,7 +93,7 @@ export default class AddTutorial extends React.Component {
                             />
                         </div>
                         <button onClick={this.saveTutorial} className="btn btn-success">
-                            Submit
+                            <p className="h5">Submit</p>
                         </button>
                     </div>
                 )}

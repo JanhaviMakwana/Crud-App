@@ -1,8 +1,8 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import TutorialDataService from '../services/TutorialService';
-import { Link } from "react-router-dom";
 
-export default class TutorialList extends React.Component {
+class TutorialList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,6 +15,7 @@ export default class TutorialList extends React.Component {
     }
 
     componentDidMount() {
+        console.log("TutorialList");
         this.retrieveTutorials();
     }
 
@@ -78,11 +79,15 @@ export default class TutorialList extends React.Component {
             })
     }
 
+    editTutorial = (id) => {
+        this.props.history.push(`/tutorials/${id}`);
+    }
+
     render() {
         const { searchTitle, tutorials, currentIndex, currentTutorial } = this.state;
         return (
-            <div className="list row">
-                <div className="col-md-8">
+            <div className="list">
+                <div className="col-md-12" >
                     <div className="input-group mb-3">
                         <input
                             type="text"
@@ -93,7 +98,7 @@ export default class TutorialList extends React.Component {
                         />
                         <div className="input-group-append">
                             <button
-                                className="btn btn-outline-secondary"
+                                className="btn btn-secondary"
                                 type="button"
                                 onClick={this.searchTutorialByTitle}
                             >
@@ -102,61 +107,64 @@ export default class TutorialList extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-6">
-                    <h4>Tutorials List</h4>
-                    <ul className="list-group">
-                        {tutorials &&
-                            tutorials.map((tutorial, index) => (
-                                <li
-                                    className={
-                                        "list-group-item" +
-                                        (index === currentIndex ? "active" : "")
-                                    }
-                                    onClick={() => this.setActiveTutorial(tutorial, index)}
-                                    key={index}
-                                >
-                                    {tutorial.title}
-                                </li>
-                            ))}
-                    </ul>
-                    <button
-                        className="m-3 btn btn-sm btn-danger"
-                        onClick={this.removeAllTutorials}
-                    >
-                        Remove All
+                <div className="row row centered" >
+                    <div className="col-md-6 p-3">
+                        <h4>Tutorials List</h4>
+                        <ul className="list-group">
+                            {tutorials &&
+                                tutorials.map((tutorial, index) => (
+                                    <li
+                                        className={
+                                            "list-group-item list-group-item-dark list-group-item-action" +
+                                            (index === currentIndex ? " active" : "")
+                                        }
+                                        onClick={() => this.setActiveTutorial(tutorial, index)}
+                                        key={index}
+                                    >
+                                        {tutorial.title}
+                                    </li>
+                                ))}
+                        </ul>
+                        <button
+                            className="m-3 btn btn-sm btn-danger"
+                            onClick={this.removeAllTutorials}
+                        >
+                            Remove All
                     </button>
-                </div>
-                <div className="col-md-6">
-                    {currentTutorial ? (
-                        <div>
-                            <h4>Tutorial</h4>
-                            <div>
-                                <label>
-                                    <strong>Title:</strong>
-                                </label>{" "}
-                                {currentTutorial.description}
+                    </div>
+                    <div className="col-md-6 mt-4">
+                        {currentTutorial ? (
+                            <div className="card p-4">
+                                <h4>Tutorial</h4>
+                                <div>
+                                    <label>
+                                        <strong>Title:</strong>
+                                    </label>{" "}
+                                    {currentTutorial.description}
+                                </div>
+                                <div>
+                                    <label>
+                                        <strong>Status:</strong>
+                                    </label>{" "}
+                                    {currentTutorial.published ? "Published" : "Pending"}
+                                </div>
+                                <button className="btn btn-primary btn-block"
+                                    onClick={() => this.editTutorial(currentTutorial.id)}
+                                >
+                                    Edit
+                            </button>
                             </div>
+                        ) : (
                             <div>
-                                <label>
-                                    <strong>Status:</strong>
-                                </label>{" "}
-                                {currentTutorial.published ? "Published" : "Pending"}
+                                <br />
+                                <p>Please click on a Tutorial...</p>
                             </div>
-                            <Link
-                                to={"/tutorials/" + currentTutorial.id}
-                                className="badge badge-warning"
-                            >
-                                Edit
-                            </Link>
-                        </div>
-                    ) : (
-                        <div>
-                            <br/>
-                            <p>Please click on a Tutorial...</p>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
         );
     }
 };
+
+export default withRouter(TutorialList);

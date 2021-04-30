@@ -9,17 +9,15 @@ function App() {
   return (
     <div className="App">
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/tutorials" className="navbar-brand">
-          CrudAPP
-        </a>
+        <p className="h3 text-white mr-3">CRUD APP</p>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/tutorials" className="nav-link">
+            <Link to="/tutorials" className="nav-link h5">
               Tutorials
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/add" className="nav-link">
+            <Link to="/add" className="nav-link h5">
               Add Tutorial
             </Link>
           </li>
@@ -27,9 +25,9 @@ function App() {
       </nav>
       <div className="container mt-3">
         <Switch>
-          <Route exact path={["/","/tutorials"]} component={TutorialList}/>
+          <Route exact path="/tutorials/:id" component={Tutorial} />
+          <Route exact path={["/", "/tutorials"]} component={TutorialList} />
           <Route exact path="/add" component={AddTutorial} />
-          <Route path="/tutorials/:id" component={Tutorial} /> 
         </Switch>
       </div>
     </div>

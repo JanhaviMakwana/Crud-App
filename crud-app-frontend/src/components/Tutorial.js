@@ -17,7 +17,11 @@ class Tutorial extends React.Component {
     }
 
     componentDidMount() {
-        this.getTutorial();
+        const {id} = this.props.match.params;
+        console.log("Tutorial");
+        console.log(this.props);
+        console.log(id);
+        this.getTutorial(id);
     }
 
     onChangeTitle = (e) => {
@@ -45,6 +49,7 @@ class Tutorial extends React.Component {
     }
 
     getTutorial = (id) => {
+        console.log(id);
         TutorialDataService.get(id)
             .then(response => {
                 this.setState({
@@ -136,7 +141,7 @@ class Tutorial extends React.Component {
                                 <label>
                                     <strong>Status:</strong>
                                 </label>
-                                {currentTutorial.published ? "Published" : "Pending"}
+                                {currentTutorial.published ? " Published" : " Pending"}
                             </div>
                         </form>
                         {currentTutorial.published ? (
